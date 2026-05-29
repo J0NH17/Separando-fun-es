@@ -18,14 +18,17 @@ public class TarefaController {
             
             if(nome.isEmpty()){
                 return false;
-            }
+            }else{
             
-            for (TarefaModel t : lista) {
-                t.getNome().equalsIgnoreCase(nome);
-                //Verifica se é igual cada um da lista por toda a lista! 
-                return false;
+                for (TarefaModel t : lista) {
+                   if( t.getNome().equalsIgnoreCase(nome)){
+                   
+                    return false;
+                   }
+
+                    //Verifica se é igual cada um da lista por toda a lista! 
+                }
             }
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "erro no for !");
         }

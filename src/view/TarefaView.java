@@ -36,7 +36,7 @@ public class TarefaView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         taLista = new javax.swing.JTextArea();
         cbListaTarefas = new javax.swing.JComboBox<>();
-        btOK = new javax.swing.JButton();
+        btAcoes = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,8 +100,8 @@ public class TarefaView extends javax.swing.JFrame {
 
         cbListaTarefas.addActionListener(this::cbListaTarefasActionPerformed);
 
-        btOK.setText("Ações");
-        btOK.addActionListener(this::btOKActionPerformed);
+        btAcoes.setText("Ações");
+        btAcoes.addActionListener(this::btAcoesActionPerformed);
 
         jLabel2.setText("Selecione uma tarefa:");
 
@@ -118,7 +118,7 @@ public class TarefaView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbListaTarefas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(28, 28, 28)
-                        .addComponent(btOK)
+                        .addComponent(btAcoes)
                         .addGap(27, 27, 27))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -135,7 +135,7 @@ public class TarefaView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cbListaTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btOK))
+                    .addComponent(btAcoes))
                 .addGap(16, 16, 16))
         );
 
@@ -160,6 +160,8 @@ public class TarefaView extends javax.swing.JFrame {
             //limpando e adicionando a lista do combobox;
             cbListaTarefas.addItem(nome);
             listarTextoArea();
+        }else{
+            JOptionPane.showMessageDialog(null,"Essa tarefa já existe!");
         }
         
     }//GEN-LAST:event_btAdicionarActionPerformed
@@ -167,7 +169,7 @@ public class TarefaView extends javax.swing.JFrame {
    
     }//GEN-LAST:event_cbListaTarefasActionPerformed
 
-    private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
+    private void btAcoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAcoesActionPerformed
       if(controller.listar().isEmpty()){
       
       JOptionPane.showMessageDialog(null, "Nehuma tarefa cadastrada!");
@@ -198,7 +200,7 @@ public class TarefaView extends javax.swing.JFrame {
       
       listarTextoArea();
         
-    }//GEN-LAST:event_btOKActionPerformed
+    }//GEN-LAST:event_btAcoesActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -217,8 +219,8 @@ public class TarefaView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAcoes;
     private javax.swing.JButton btAdicionar;
-    private javax.swing.JButton btOK;
     private javax.swing.JComboBox<String> cbListaTarefas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
