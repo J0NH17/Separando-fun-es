@@ -14,6 +14,15 @@ public class TarefaView extends javax.swing.JFrame {
     public TarefaView() {
         initComponents();
     }
+    
+    public void listarTextoArea(){
+        // percorrer lista atualizando as tarefas! 
+        taLista.setText("");
+        for(TarefaModel t : controller.listar() ){
+            taLista.append(t.toString());
+            taLista.append("\n");
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -26,7 +35,6 @@ public class TarefaView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         taLista = new javax.swing.JTextArea();
-        btListarTarefa = new javax.swing.JButton();
         cbListaTarefas = new javax.swing.JComboBox<>();
         btOK = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -90,12 +98,9 @@ public class TarefaView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btListarTarefa.setText("Listar Tarefas");
-        btListarTarefa.addActionListener(this::btListarTarefaActionPerformed);
-
         cbListaTarefas.addActionListener(this::cbListaTarefasActionPerformed);
 
-        btOK.setText("ok");
+        btOK.setText("Ações");
         btOK.addActionListener(this::btOKActionPerformed);
 
         jLabel2.setText("Selecione uma tarefa:");
@@ -111,12 +116,10 @@ public class TarefaView extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbListaTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btOK, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btListarTarefa)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(cbListaTarefas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(28, 28, 28)
+                        .addComponent(btOK)
+                        .addGap(27, 27, 27))
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -132,7 +135,6 @@ public class TarefaView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(cbListaTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btListarTarefa)
                     .addComponent(btOK))
                 .addGap(16, 16, 16))
         );
@@ -146,31 +148,23 @@ public class TarefaView extends javax.swing.JFrame {
     }//GEN-LAST:event_txfNomeActionPerformed
 
     private void btAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarActionPerformed
-      if(txfNome.getText().isEmpty()||txfNome.getText().contains(" ")){
-            JOptionPane.showMessageDialog(null,"O campo do nome da tarefa está vazio ou contém espaços!");
+
+        String nome = txfNome.getText();
+        boolean verificador = controller.adicionar(nome);
+        // outro boolean verificando o retorno do boolean da função adcionar!;
+        
+        if (verificador) {
+            //Verificando retorno se é permitido adicionar a tarefa;
+            JOptionPane.showMessageDialog(null, "Tarefa cadastrada!");
             txfNome.setText("");
-        }else{
-            String nome = txfNome.getText();
-            controller.adicionar(nome);
-            JOptionPane.showMessageDialog(null,"Tarefa cadastrada!");
-            txfNome.setText("");
+            //limpando e adicionando a lista do combobox;
             cbListaTarefas.addItem(nome);
+            listarTextoArea();
         }
+        
     }//GEN-LAST:event_btAdicionarActionPerformed
-
-    private void btListarTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListarTarefaActionPerformed
-        
-        // percorrer lista
-        taLista.setText("");
-        for(TarefaModel t : controller.listar() ){
-            taLista.append(t.toString());
-            taLista.append("\n");
-        }
-        
-    }//GEN-LAST:event_btListarTarefaActionPerformed
-
     private void cbListaTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListaTarefasActionPerformed
-       
+   
     }//GEN-LAST:event_cbListaTarefasActionPerformed
 
     private void btOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOKActionPerformed
@@ -183,16 +177,17 @@ public class TarefaView extends javax.swing.JFrame {
         int escolha = JOptionPane.showOptionDialog(
                 null,
                 cbListaTarefas.getSelectedItem().toString(), 
-                "Oque fazer com essa tarefa ? ",    //Titulo da caixa
+                "O que deseja fazer com essa tarefa ? ",    //Titulo da caixa
                 JOptionPane.DEFAULT_OPTION,         //Botões desabilitados
-                JOptionPane.OK_OPTION,              //Icones
+                JOptionPane.QUESTION_MESSAGE,       //Icones
                 null,                               //Sempre null
                 opcoes,                             //Vetor 
                 opcoes[0]);                         //Inicio do vetor
         
          if (escolha == 0) {
-             controller.listar().get(cbListaTarefas.getSelectedIndex()).setConcluida(true);
-            JOptionPane.showMessageDialog(null, "tarefa concluida");
+                controller.listar().get(cbListaTarefas.getSelectedIndex()).setConcluida(true);
+                JOptionPane.showMessageDialog(null, "tarefa concluida");
+                
         } else if (escolha == 1) {
              controller.listar().remove(cbListaTarefas.getSelectedIndex());
              cbListaTarefas.removeItem(cbListaTarefas.getSelectedItem().toString());
@@ -200,6 +195,8 @@ public class TarefaView extends javax.swing.JFrame {
         }
         
       }
+      
+      listarTextoArea();
         
     }//GEN-LAST:event_btOKActionPerformed
 
@@ -221,7 +218,6 @@ public class TarefaView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdicionar;
-    private javax.swing.JButton btListarTarefa;
     private javax.swing.JButton btOK;
     private javax.swing.JComboBox<String> cbListaTarefas;
     private javax.swing.JLabel jLabel1;

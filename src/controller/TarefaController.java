@@ -4,6 +4,7 @@ package controller;
  
  import model.TarefaModel;
  import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class TarefaController {
     //Lista
@@ -11,10 +12,27 @@ public class TarefaController {
      
     //adicionar obj
     
-    public void adicionar(String nome){
+    public boolean adicionar(String nome){
+        // boolean para 
+        try {
+            
+            if(nome.isEmpty()){
+                return false;
+            }
+            
+            for (TarefaModel t : lista) {
+                t.getNome().equalsIgnoreCase(nome);
+                //Verifica se é igual cada um da lista por toda a lista! 
+                return false;
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro no for !");
+        }
         
         TarefaModel tarefa = new TarefaModel(nome);
         lista.add(tarefa);
+        return true;
           
     }
     //remover obj
