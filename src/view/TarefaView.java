@@ -1,6 +1,7 @@
 package view;
 
 import controller.TarefaController;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import model.TarefaModel;
 
@@ -13,6 +14,7 @@ public class TarefaView extends javax.swing.JFrame {
 
     public TarefaView() {
         initComponents();
+        setIconImage(new ImageIcon("src/IMG/cadastro32img.png").getImage());
     }
     
     public void listarTextoArea(){
@@ -47,6 +49,11 @@ public class TarefaView extends javax.swing.JFrame {
         jLabel1.setText("Nome da tarefa: ");
 
         txfNome.addActionListener(this::txfNomeActionPerformed);
+        txfNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txfNomeKeyPressed(evt);
+            }
+        });
 
         btAdicionar.setText("Adicionar");
         btAdicionar.addActionListener(this::btAdicionarActionPerformed);
@@ -161,8 +168,11 @@ public class TarefaView extends javax.swing.JFrame {
             cbListaTarefas.addItem(nome);
             listarTextoArea();
         }else{
-            JOptionPane.showMessageDialog(null,"Essa tarefa já existe!");
+            JOptionPane.showMessageDialog(null,"Essa tarefa está vazia ou já existe!");
         }
+        
+        //Retorna o foco na seleção desejada
+        txfNome.requestFocus();
         
     }//GEN-LAST:event_btAdicionarActionPerformed
     private void cbListaTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbListaTarefasActionPerformed
@@ -201,6 +211,13 @@ public class TarefaView extends javax.swing.JFrame {
       listarTextoArea();
         
     }//GEN-LAST:event_btAcoesActionPerformed
+
+    private void txfNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfNomeKeyPressed
+        //Pressionar enter no JTextFild executa o botão
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btAdicionarActionPerformed(null);
+        }
+    }//GEN-LAST:event_txfNomeKeyPressed
 
     public static void main(String args[]) {
         try {
